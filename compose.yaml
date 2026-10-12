@@ -1,0 +1,34 @@
+name: weibo
+x-runtime: &runtime
+  image: nebula-weibo:local
+  init: true
+  env_file:
+    - .env
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+services:
+  app:
+    <<: *runtime
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8878:8877"
+    environment:
+      APP_BASE_PATH: /weibo
+  worker:
+    <<: *runtime
+    profiles: [collector]
+    restart: unless-stopped
+    command: [python, -m, server.executor]
+    stop_grace_period: 60s
+    healthcheck:
+      disable: true
+  db-init:
+    <<: *runtime
+    profiles: [maintenance]
+    restart: "no"
+    command: [python, -m, server.cli, init]
+    healthcheck:
+      disable: true
