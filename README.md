@@ -33,7 +33,7 @@
 推荐 Python 3.12、Node.js 22、MySQL 8.0+。MySQL 需自行准备，项目不会安装数据库服务。以下命令在项目根目录执行。
 
 ```sh
-git clone https://github.com/1933211129/nebula-weibo.git
+git clone https://github.com/YuanBoKong/nebula-weibo.git
 cd nebula-weibo
 python3 -m venv .venv
 source .venv/bin/activate
